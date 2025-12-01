@@ -20,8 +20,9 @@ function DefaultTheme({ params }: DefaultThemeProps) {
         fontFamily: 'Inter, sans-serif',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         padding: 80,
+        paddingTop: 100,
         color: '#fff',
         width: params.width || 1200,
         height: params.height || 630,
@@ -30,19 +31,19 @@ function DefaultTheme({ params }: DefaultThemeProps) {
         backgroundColor: '#1b1b1d'
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          width: '100%',
-          height: '100%'
-        }}
-      >
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            width: '100%',
+            height: '100%'
+          }}
+        >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'stretch',
             gap: 32,
             maxWidth: '70%'
           }}
@@ -50,9 +51,9 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           <div
             style={{
               width: 12,
-              height: 200,
               backgroundColor: '#40a3ff',
-              borderRadius: 20
+              borderRadius: 20,
+              alignSelf: 'stretch'
             }}
           />
 
@@ -72,9 +73,11 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           src={`data:image/svg+xml;utf8,${encodeURIComponent(svgInline)}`}
           alt="Character illustration"
           style={{
-            height: 260,
-            width: 260,
-            objectFit: 'contain'
+            height: 140,
+            width: 140,
+            objectFit: 'contain',
+            alignSelf: 'flex-end',
+            marginTop: 40
           }}
         />
       </div>
