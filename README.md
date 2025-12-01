@@ -86,7 +86,7 @@ Now you can run and test your new theme at localhost
 ## Get started
 
 This project is running with NextJS, to run locally, install all dependencies
-I use yarn to run all commands, but you can use npm if you want
+Use Yarn for installs and scripts (a `yarn.lock` is tracked and `package-lock.json` is intentionally absent to avoid mixing package managers).
 
 **Install dependencies**
 
