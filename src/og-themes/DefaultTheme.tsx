@@ -13,16 +13,17 @@ const svgInline = `
 function DefaultTheme({ params }: DefaultThemeProps) {
   const title = params.title || '';
   const author = params.author || 'maik.io';
+  const fontFamily = '"SN Pro", "Inter", "Helvetica Neue", Arial, sans-serif';
 
   return (
     <div
       style={{
-        fontFamily: 'Inter, sans-serif',
+        fontFamily,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         padding: 80,
-        paddingTop: 100,
+        paddingTop: 80,
         color: '#fff',
         width: params.width || 1200,
         height: params.height || 630,
@@ -31,21 +32,23 @@ function DefaultTheme({ params }: DefaultThemeProps) {
         backgroundColor: '#1b1b1d'
       }}
     >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between',
-            width: '100%',
-            height: '100%'
-          }}
-        >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          width: '100%',
+          height: '100%'
+        }}
+      >
         <div
           style={{
             display: 'flex',
             alignItems: 'stretch',
             gap: 32,
-            maxWidth: '70%'
+            maxWidth: '65%',
+            paddingRight: 24,
+            height: 'fit-content'
           }}
         >
           <div
@@ -61,7 +64,7 @@ function DefaultTheme({ params }: DefaultThemeProps) {
             style={{
               fontSize: 86,
               fontWeight: 700,
-              lineHeight: 1.05,
+              lineHeight: 1.08,
               whiteSpace: 'pre-line'
             }}
           >
@@ -69,28 +72,36 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           </div>
         </div>
 
-        <img
-          src={`data:image/svg+xml;utf8,${encodeURIComponent(svgInline)}`}
-          alt="Character illustration"
+        <div
           style={{
-            height: 140,
-            width: 140,
-            objectFit: 'contain',
-            alignSelf: 'flex-end',
-            marginTop: 40
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end'
           }}
-        />
+        >
+          <img
+              src={`data:image/svg+xml;utf8,${encodeURIComponent(svgInline)}`}
+              alt="Character illustration"
+              style={{
+                height: 188,
+                width: 188,
+                objectFit: 'contain',
+                marginBottom: 12
+              }}
+            />
+          </div>
       </div>
 
       <div
-        style={{
-          position: 'absolute',
-          bottom: 50,
-          left: 80,
-          fontSize: 36,
-          fontWeight: 600,
-          color: '#40a3ff'
-        }}
+          style={{
+            position: 'absolute',
+            bottom: 50,
+            left: 80,
+            fontSize: 45,
+            fontWeight: 600,
+            color: '#40a3ff'
+          }}
       >
         {author}
       </div>
