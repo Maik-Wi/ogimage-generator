@@ -9,10 +9,12 @@ interface BlogThemeProps {
 }
 
 function BlogTheme({ params }: BlogThemeProps) {
+  const fontFamily = '"SN Pro", "Inter", "Helvetica Neue", Arial, sans-serif';
+
   return (
     <div
       style={{
-        fontFamily: 'sans-serif',
+        fontFamily,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
