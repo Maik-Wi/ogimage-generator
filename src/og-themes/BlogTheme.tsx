@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 interface BlogThemeProps {
   params: {
     title?: string;
@@ -45,7 +44,6 @@ function BlogTheme({ params }: BlogThemeProps) {
           >
             <img
               src={params.image}
-              alt={params.title || 'Post illustration'}
               style={{
                 borderRadius: 10,
                 objectFit: 'cover',
