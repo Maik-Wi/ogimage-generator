@@ -75,8 +75,8 @@ function DefaultTheme({ params }: DefaultThemeProps) {
             height: 180,
             width: 180,
             objectFit: 'contain',
-            right: 0,
-            bottom: 0,
+            right: -40,
+            bottom: -40,
             position: 'absolute',
           }}
         />
