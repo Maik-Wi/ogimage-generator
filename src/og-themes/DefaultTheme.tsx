@@ -72,9 +72,11 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           src={`data:image/svg+xml;utf8,${encodeURIComponent(svgInline)}`}
           alt="Character illustration"
           style={{
-            height: 260,
-            width: 260,
-            objectFit: 'contain'
+            height: 180,
+            width: 180,
+            objectFit: 'contain',
+            right: 80,
+            bottom: 50
           }}
         />
       </div>
