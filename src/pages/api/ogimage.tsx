@@ -1,21 +1,15 @@
 import { ImageResponse } from '@vercel/og';
-import { NextRequest } from 'next/server';
-import { NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { BlogTheme, DefaultTheme } from '@themes/index';
 import { ReactElement } from 'react';
 
 export const config = {
-  runtime: 'experimental-edge'
+  runtime: 'nodejs'
 };
 
-export default async function ogimage(req: NextRequest, res: NextApiResponse) {
-  let PARAMS: any = {};
+export default async function ogimage(req: NextApiRequest, res: NextApiResponse) {
+  const PARAMS = req.query as Record<string, string | string[]>;
   let selectedTheme: ReactElement;
-
-  // Add all dynamic url params to PARAMS
-  req.nextUrl.searchParams.forEach((val, key) => {
-    return !!val ? (PARAMS[key] = val) : null;
-  });
 
   // Switch OG Image style by themes created
   switch (PARAMS.theme) {
@@ -28,10 +22,15 @@ export default async function ogimage(req: NextRequest, res: NextApiResponse) {
   }
 
   try {
-    return new ImageResponse(selectedTheme, {
-      width: PARAMS.width,
-      height: PARAMS.height
+    const image = new ImageResponse(selectedTheme, {
+      width: Number(PARAMS.width ?? 1200),
+      height: Number(PARAMS.height ?? 630)
     });
+
+    const arrayBuffer = await image.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    res.setHeader('Content-Type', 'image/png');
+    res.status(200).send(buffer);
   } catch {
     res.status(500).send('Server error');
   }
