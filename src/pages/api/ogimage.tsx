@@ -4,7 +4,7 @@ import { BlogTheme, DefaultTheme } from '@themes/index';
 import { ReactElement } from 'react';
 
 export const config = {
-  runtime: 'edge'
+  runtime: 'experimental-edge'
 };
 
 export default async function ogimage(req: NextApiRequest, res: NextApiResponse) {
