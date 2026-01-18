@@ -17,10 +17,11 @@ function DefaultTheme({ params }: DefaultThemeProps) {
   return (
     <div
       style={{
-        fontFamily: 'Inter, sans-serif',
+        fontFamily: '"SN Pro", "Inter", "Helvetica Neue", Arial, sans-serif',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'flex-start',
         padding: 80,
         color: '#fff',
         width: params.width || 1200,
@@ -33,67 +34,56 @@ function DefaultTheme({ params }: DefaultThemeProps) {
       <div
         style={{
           display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          width: '100%',
-          height: '100%'
+          gap: 32,
+          maxWidth: '85%'
         }}
       >
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 32,
-            maxWidth: '70%'
+            width: 12,
+            height: 300,
+            backgroundColor: '#40a3ff',
+            borderRadius: 20
           }}
-        >
-          <div
-            style={{
-              width: 12,
-              height: 200,
-              backgroundColor: '#40a3ff',
-              borderRadius: 20
-            }}
-          />
+        />
 
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
           <div
             style={{
-              fontSize: 86,
+              fontSize: 96,
               fontWeight: 700,
-              lineHeight: 1.05,
+              lineHeight: 1.1,
               whiteSpace: 'pre-line'
             }}
           >
             {title}
           </div>
+          <div
+            style={{
+              fontSize: 72,
+              fontWeight: 400,
+              color: '#40a3ff'
+            }}
+          >
+            {author}
+          </div>
         </div>
-
-        <img
-          src={`data:image/svg+xml;utf8,${encodeURIComponent(svgInline)}`}
-          alt="Character illustration"
-          style={{
-            height: 180,
-            width: 180,
-            objectFit: 'contain',
-            right: -40,
-            bottom: -40,
-            position: 'absolute',
-          }}
-        />
       </div>
 
-      <div
+      <img
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(svgInline)}`}
+        alt="Character illustration"
         style={{
-          position: 'absolute',
-          bottom: 50,
-          left: 80,
-          fontSize: 36,
-          fontWeight: 600,
-          color: '#40a3ff'
+          height: 200,
+          width: 200,
+          objectFit: 'contain',
+          right: 40,
+          bottom: 40,
+          position: 'absolute'
         }}
-      >
-        {author}
-      </div>
+      />
     </div>
   );
 }

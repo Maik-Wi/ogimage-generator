@@ -2,9 +2,8 @@ import { ImageResponse } from '@vercel/og';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { BlogTheme, DefaultTheme } from '@themes/index';
 import { ReactElement } from 'react';
-
 export const config = {
-  runtime: 'nodejs'
+  runtime: 'edge'
 };
 
 export default async function ogimage(req: NextApiRequest, res: NextApiResponse) {
@@ -22,9 +21,26 @@ export default async function ogimage(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const fontData = await fetch(
+      new URL('../../../SNPro-Regular.otf', import.meta.url)
+    ).then((res) => res.arrayBuffer());
     const image = new ImageResponse(selectedTheme, {
       width: Number(PARAMS.width ?? 1200),
-      height: Number(PARAMS.height ?? 630)
+      height: Number(PARAMS.height ?? 630),
+      fonts: [
+        {
+          name: 'SN Pro',
+          data: fontData,
+          weight: 400,
+          style: 'normal'
+        },
+        {
+          name: 'SN Pro',
+          data: fontData,
+          weight: 700,
+          style: 'normal'
+        }
+      ]
     });
 
     const arrayBuffer = await image.arrayBuffer();

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import { BlogTheme } from '@themes/BlogTheme';
+import { DefaultTheme } from '@themes/DefaultTheme';
 import { useState, useEffect } from 'react';
 
 function Home() {
@@ -68,7 +68,7 @@ function Home() {
           </a>
         </div>
 
-        <BlogTheme params={params} />
+        <DefaultTheme params={params} />
       </div>
     </>
   );
