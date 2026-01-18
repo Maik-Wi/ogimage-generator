@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { OgImageParams } from '@lib/og-params';
 
 interface BlogThemeProps {
@@ -42,6 +43,7 @@ function BlogTheme({ params }: BlogThemeProps) {
           >
             <img
               src={params.image}
+              alt={params.title ? `Cover image for ${params.title}` : 'Cover image'}
               style={{
                 borderRadius: 10,
                 objectFit: 'cover',
