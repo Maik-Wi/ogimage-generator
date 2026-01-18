@@ -1,44 +1,36 @@
 import { ImageResponse } from '@vercel/og';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { BlogTheme, DefaultTheme } from '@themes/index';
 import { ReactElement } from 'react';
+
+import { buildOgParams } from '@lib/og-params';
+import { BlogTheme, DefaultTheme } from '@themes/index';
 
 export const config = {
   runtime: 'experimental-edge'
 };
 
-export default async function ogimage(req: NextApiRequest, res: NextApiResponse) {
-  const PARAMS = req.query as Record<string, string | string[]>;
-
-  const host = req.headers.host ?? 'localhost:3000';
-  const protocolHeader = req.headers['x-forwarded-proto'];
-  const protocol = Array.isArray(protocolHeader)
-    ? protocolHeader[0]
-    : protocolHeader || 'http';
-  const logoUrl = new URL('/hat-logo.png', `${protocol}://${host}`).toString();
-
-  let selectedTheme: ReactElement;
-
-  PARAMS.logo = logoUrl;
-
-  // Switch OG Image style by themes created
-  switch (PARAMS.theme) {
+const selectTheme = (params: ReturnType<typeof buildOgParams>): ReactElement => {
+  switch (params.theme) {
     case 'blog':
-      selectedTheme = <BlogTheme params={PARAMS} />;
-      break;
+      return <BlogTheme params={params} />;
     default:
-      selectedTheme = <DefaultTheme params={PARAMS} />;
-      break;
+      return <DefaultTheme params={params} />;
   }
+};
+
+const getLogoUrl = (reqUrl: URL) => new URL('/hat-logo.png', reqUrl).toString();
+
+export default async function ogimage(req: Request) {
+  const requestUrl = new URL(req.url);
+  const params = buildOgParams(requestUrl.searchParams, getLogoUrl(requestUrl));
 
   try {
-    const fontData = await fetch(new URL('../../../SNPro-Regular.otf', import.meta.url)).then(
-      (res) => res.arrayBuffer()
-    );
+    const fontData = await fetch(
+      new URL('../../assets/fonts/SNPro-Regular.otf', import.meta.url)
+    ).then((res) => res.arrayBuffer());
 
-    const image = new ImageResponse(selectedTheme, {
-      width: Number(PARAMS.width ?? 1200),
-      height: Number(PARAMS.height ?? 630),
+    return new ImageResponse(selectTheme(params), {
+      width: params.width,
+      height: params.height,
       fonts: [
         {
           name: 'SN Pro',
@@ -54,9 +46,7 @@ export default async function ogimage(req: NextApiRequest, res: NextApiResponse)
         }
       ]
     });
-
-    return image;
-  } catch (e) {
+  } catch (error) {
     return new Response('Failed to generate image', { status: 500 });
   }
 }

@@ -1,23 +1,41 @@
 import Head from 'next/head';
+import { useEffect, useMemo, useState } from 'react';
 
+import type { OgImageParams } from '@lib/og-params';
+import { buildOgImageUrl } from '@lib/og-url';
 import { DefaultTheme } from '@themes/DefaultTheme';
-import { useState, useEffect } from 'react';
 
 function Home() {
-  const [title, setTitle] = useState('Your title here');
+  const [title, setTitle] = useState('Proamerikanisch\neingestellt waren');
   const [image, setImage] = useState('');
-  const [width, setWidth] = useState(800);
-  const [height, setHeight] = useState(600);
-  const [generatedImageUrl, setGeneratedImageUrl] = useState('');
-
-  const [params, setParams] = useState({ title, image, width, height });
+  const [width, setWidth] = useState(1200);
+  const [height, setHeight] = useState(630);
+  const [baseUrl, setBaseUrl] = useState('');
 
   useEffect(() => {
-    setGeneratedImageUrl(
-      `${window.location.origin}/api/ogimage?title=${title}&width=${width}&height=${height}&image=${image}`
-    );
-    setParams({ title, image, width, height });
-  }, [image, title, width, height]);
+    setBaseUrl(window.location.origin);
+  }, []);
+
+  const generatedImageUrl = useMemo(() => {
+    if (!baseUrl) {
+      return '';
+    }
+
+    return buildOgImageUrl(baseUrl, {
+      title,
+      image,
+      width,
+      height,
+      theme: 'default'
+    });
+  }, [baseUrl, height, image, title, width]);
+
+  const params: Pick<OgImageParams, 'title' | 'logo' | 'width' | 'height'> = {
+    title,
+    logo: '/hat-logo.png',
+    width,
+    height
+  };
 
   return (
     <>
@@ -43,24 +61,28 @@ function Home() {
             width: 300
           }}
         >
-          <input
+          <textarea
             placeholder="title"
-            type="text"
+            rows={3}
             onChange={(e) => setTitle(e.target.value)}
+            value={title}
           />
           <input
             placeholder="Image url"
             type="text"
-            onBlur={(e) => setImage(e.target.value)}
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
           />
           <input
             placeholder="Width"
-            type="text"
+            type="number"
+            value={width}
             onChange={(e) => setWidth(Number(e.target.value))}
           />
           <input
             placeholder="Height"
-            type="text"
+            type="number"
+            value={height}
             onChange={(e) => setHeight(Number(e.target.value))}
           />
           <a href={generatedImageUrl} download="Image generated">
