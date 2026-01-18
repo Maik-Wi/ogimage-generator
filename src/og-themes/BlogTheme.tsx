@@ -1,11 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
+import type { OgImageParams } from '@lib/og-params';
+
 interface BlogThemeProps {
-  params: {
-    title?: string;
-    image?: string;
-    author?: string;
-    width?: number;
-    height?: number;
-  };
+  params: Pick<OgImageParams, 'title' | 'image' | 'author' | 'width' | 'height'>;
 }
 
 function BlogTheme({ params }: BlogThemeProps) {
@@ -21,8 +18,8 @@ function BlogTheme({ params }: BlogThemeProps) {
         padding: 60,
         backgroundColor: '#fff',
         color: '#2c3357',
-        width: params.width || 1200,
-        height: params.height || 630,
+        width: params.width,
+        height: params.height,
         boxSizing: 'border-box',
         borderBottom: '8px solid #33C7B3',
         position: 'relative'
@@ -46,6 +43,7 @@ function BlogTheme({ params }: BlogThemeProps) {
           >
             <img
               src={params.image}
+              alt={params.title ? `Cover image for ${params.title}` : 'Cover image'}
               style={{
                 borderRadius: 10,
                 objectFit: 'cover',
