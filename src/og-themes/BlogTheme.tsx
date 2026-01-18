@@ -2,7 +2,7 @@
 import type { OgImageParams } from '@lib/og-params';
 
 interface BlogThemeProps {
-  params: Pick<OgImageParams, 'title' | 'image' | 'author' | 'width' | 'height'>;
+  params: Pick<OgImageParams, 'title' | 'image' | 'author' | 'time' | 'width' | 'height'>;
 }
 
 function BlogTheme({ params }: BlogThemeProps) {
@@ -65,16 +65,27 @@ function BlogTheme({ params }: BlogThemeProps) {
           }}
         >
           {params.title}
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 20,
-              color: '#909090',
-              marginTop: 30
-            }}
-          >
-            By: <div style={{ marginLeft: 10 }}>{params.author}</div>
-          </div>
+          {(params.author || params.time) && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: 20,
+                color: '#909090',
+                marginTop: 30,
+                gap: 10
+              }}
+            >
+              {params.author && (
+                <span>
+                  By: <span>{params.author}</span>
+                </span>
+              )}
+              {params.time && (
+                <span style={{ fontWeight: 700, color: '#2c3357' }}>{params.time}</span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

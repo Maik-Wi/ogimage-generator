@@ -8,6 +8,7 @@ export interface OgImageParams {
   theme: OgThemeName;
   image?: string;
   author?: string;
+  time?: string;
 }
 
 const DEFAULTS = {
@@ -36,6 +37,7 @@ export const buildOgParams = (searchParams: URLSearchParams, logoUrl: string): O
     title: searchParams.get('title') ?? '',
     image: searchParams.get('image') ?? undefined,
     author: searchParams.get('author') ?? undefined,
+    time: searchParams.get('time') ?? undefined,
     width: parseNumber(searchParams.get('width'), DEFAULTS.width),
     height: parseNumber(searchParams.get('height'), DEFAULTS.height),
     logo: logoUrl,

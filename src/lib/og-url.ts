@@ -2,7 +2,10 @@ import type { OgImageParams } from '@lib/og-params';
 
 export const buildOgImageUrl = (
   baseUrl: string,
-  params: Pick<OgImageParams, 'title' | 'width' | 'height' | 'image' | 'theme' | 'author'>
+  params: Pick<
+    OgImageParams,
+    'title' | 'width' | 'height' | 'image' | 'theme' | 'author' | 'time'
+  >
 ) => {
   const url = new URL('/api/ogimage', baseUrl);
 
@@ -16,6 +19,10 @@ export const buildOgImageUrl = (
 
   if (params.author) {
     url.searchParams.set('author', params.author);
+  }
+
+  if (params.time) {
+    url.searchParams.set('time', params.time);
   }
 
   if (params.theme) {
