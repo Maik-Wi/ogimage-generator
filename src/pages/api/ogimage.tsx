@@ -2,13 +2,24 @@ import { ImageResponse } from '@vercel/og';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { BlogTheme, DefaultTheme } from '@themes/index';
 import { ReactElement } from 'react';
+
 export const config = {
   runtime: 'edge'
 };
 
 export default async function ogimage(req: NextApiRequest, res: NextApiResponse) {
   const PARAMS = req.query as Record<string, string | string[]>;
+
+  const host = req.headers.host ?? 'localhost:3000';
+  const protocolHeader = req.headers['x-forwarded-proto'];
+  const protocol = Array.isArray(protocolHeader)
+    ? protocolHeader[0]
+    : protocolHeader || 'http';
+  const logoUrl = new URL('/hat-logo.png', `${protocol}://${host}`).toString();
+
   let selectedTheme: ReactElement;
+
+  PARAMS.logo = logoUrl;
 
   // Switch OG Image style by themes created
   switch (PARAMS.theme) {
@@ -21,9 +32,10 @@ export default async function ogimage(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const fontData = await fetch(
-      new URL('../../../SNPro-Regular.otf', import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    const fontData = await fetch(new URL('../../../SNPro-Regular.otf', import.meta.url)).then(
+      (res) => res.arrayBuffer()
+    );
+
     const image = new ImageResponse(selectedTheme, {
       width: Number(PARAMS.width ?? 1200),
       height: Number(PARAMS.height ?? 630),
@@ -43,11 +55,8 @@ export default async function ogimage(req: NextApiRequest, res: NextApiResponse)
       ]
     });
 
-    const arrayBuffer = await image.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    res.setHeader('Content-Type', 'image/png');
-    res.status(200).send(buffer);
-  } catch {
-    res.status(500).send('Server error');
+    return image;
+  } catch (e) {
+    return new Response('Failed to generate image', { status: 500 });
   }
 }
