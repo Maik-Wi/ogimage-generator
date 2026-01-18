@@ -1,15 +1,12 @@
+import type { OgImageParams } from '@lib/og-params';
+
 interface DefaultThemeProps {
-  params: {
-    title?: string;
-    logo?: string;
-    width?: number;
-    height?: number;
-  };
+  params: Pick<OgImageParams, 'title' | 'logo' | 'width' | 'height'>;
 }
 
 function DefaultTheme({ params }: DefaultThemeProps) {
-  const title = params.title || '';
-  const logo = params.logo || '';
+  const title = params.title;
+  const logo = params.logo;
 
   return (
     <div
@@ -17,13 +14,12 @@ function DefaultTheme({ params }: DefaultThemeProps) {
         fontFamily: '"SN Pro", "Inter", "Helvetica Neue", Arial, sans-serif',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
-        gap: 48,
-        padding: 96,
+        gap: 56,
+        padding: 88,
         color: '#121212',
-        width: params.width || 1200,
-        height: params.height || 630,
+        width: params.width,
+        height: params.height,
         boxSizing: 'border-box',
         position: 'relative',
         backgroundColor: '#ffffff'
@@ -34,9 +30,10 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           src={logo}
           alt="Hat logo"
           style={{
-            width: 180,
-            height: 180,
-            objectFit: 'contain'
+            width: 168,
+            height: 168,
+            objectFit: 'contain',
+            flexShrink: 0
           }}
         />
       )}
@@ -46,25 +43,25 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          gap: 36,
-          maxWidth: '70%'
+          gap: 40,
+          maxWidth: 820
         }}
       >
         <div
           style={{
             width: 6,
-            height: 320,
+            height: 300,
             backgroundColor: '#121212',
             borderRadius: 8
           }}
         />
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div
             style={{
               fontSize: 72,
               fontWeight: 700,
-              lineHeight: 1.15,
+              lineHeight: 1.1,
               whiteSpace: 'pre-line'
             }}
           >
@@ -72,7 +69,7 @@ function DefaultTheme({ params }: DefaultThemeProps) {
           </div>
           <div
             style={{
-              fontSize: 48,
+              fontSize: 44,
               fontWeight: 500
             }}
           >
